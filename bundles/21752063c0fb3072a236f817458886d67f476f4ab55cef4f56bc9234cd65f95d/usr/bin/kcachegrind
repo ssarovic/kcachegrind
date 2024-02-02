@@ -1,0 +1,12 @@
+#! /bin/bash
+
+current_directory="$(dirname "$(readlink -f "$0")")"
+executable="${current_directory}/./kcachegrind-x"
+library_path="../../lib64:../lib64:../../lib:../lib:../../lib32:../lib32"
+library_path="${current_directory}/${library_path//:/:${current_directory}/}"
+linker="${current_directory}/./linker-cd1d06c5ed3b51feffb52e0c2ed0d381d8eb7a0c7de8d46be25708d71e540ee2"
+if [ "true" == "true" ]; then
+    exec "${linker}" --library-path "${library_path}" --inhibit-rpath "" "${executable}" "$@"
+else
+    exec "${linker}" --library-path "${library_path}" "${executable}" "$@"
+fi
